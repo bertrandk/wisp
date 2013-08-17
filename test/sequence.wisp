@@ -2,7 +2,7 @@
   (:require [wisp.src.sequence :refer [cons conj list list? seq vec empty?
                                        count first second third rest last
                                        butlast take drop repeat concat reverse
-                                       sort map filter reduce assoc]]
+                                       sort map filter reduce assoc partition]]
             [wisp.src.runtime :refer [str inc dec even? odd? vals =]]))
 
 
@@ -341,3 +341,9 @@
 (assert (= {:a :b} (assoc {} :a :b)))
 (assert (= {:a :b :c :d} (assoc {:a :b} :c :d)))
 (assert (= {:a :c} (assoc {:a :b} :a :c)))
+
+(print "test partition")
+
+(assert (= (partition 2 [:a :b :c :d :e :f]) [[:a :b][:c :d][:e :f]]))
+(assert (= (partition 2 3 [:a :b :c :d :e :f]) [[:a :b][:d :e]]))
+(assert (= (partition 2 (list :a :b :c :d :e :f)) [[:a :b][:c :d][:e :f]]))

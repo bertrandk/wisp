@@ -423,3 +423,15 @@
       result
       (recur (dec n)
              (conj result x)))))
+
+(defn partition
+  "Returns a vector of vectors of `n` items, offset by a given `step` or `n` if
+  no `step` is given."
+  ([n sequence]
+    (partition n n sequence))
+  ([n step sequence]
+    (loop [result []
+           s (seq sequence)]
+      (if (empty? s)
+        result
+        (recur (conj result (vec (take n s))) (drop step s))))))
