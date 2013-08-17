@@ -2,7 +2,8 @@
   (:require [wisp.src.sequence :refer [cons conj list list? seq vec empty?
                                        count first second third rest last
                                        butlast take drop repeat concat reverse
-                                       sort map filter reduce assoc partition]]
+                                       sort map filter reduce assoc partition
+                                       nthnext]]
             [wisp.src.runtime :refer [str inc dec even? odd? vals =]]))
 
 
@@ -347,3 +348,8 @@
 (assert (= (partition 2 [:a :b :c :d :e :f]) [[:a :b][:c :d][:e :f]]))
 (assert (= (partition 2 3 [:a :b :c :d :e :f]) [[:a :b][:d :e]]))
 (assert (= (partition 2 (list :a :b :c :d :e :f)) [[:a :b][:c :d][:e :f]]))
+
+(print "test nthnext")
+
+(assert (= (nthnext [1 2 3 4 5 6 7 8 9] 3) [4 5 6 7 8 9]))
+(assert (= (nthnext [1] 2) []))

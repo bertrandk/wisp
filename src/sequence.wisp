@@ -435,3 +435,12 @@
       (if (empty? s)
         result
         (recur (conj result (vec (take n s))) (drop step s))))))
+
+(defn nthnext
+  "Returns a vector of the nth next of a sequence."
+  [sequence n]
+  (loop [n n
+         items (seq sequence)]
+    (if (and (not (empty? items)) (> n 0))
+      (recur (dec n) (rest items))
+      items)))
