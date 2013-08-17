@@ -444,3 +444,14 @@
     (if (and (not (empty? items)) (> n 0))
       (recur (dec n) (rest items))
       items)))
+
+(defn interleave
+  "Returns a vector of the items of the first sequence interposed by items of
+  the second sequence."
+  [sequence1 sequence2]
+  (loop [result []
+         s1 (seq sequence1)
+         s2 (seq sequence2)]
+    (if (empty? s1)
+      result
+      (recur (conj result (first s1) (first s2)) (rest s1) (rest s2)))))

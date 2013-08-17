@@ -3,7 +3,7 @@
                                        count first second third rest last
                                        butlast take drop repeat concat reverse
                                        sort map filter reduce assoc partition
-                                       nthnext]]
+                                       nthnext interleave]]
             [wisp.src.runtime :refer [str inc dec even? odd? vals =]]))
 
 
@@ -353,3 +353,8 @@
 
 (assert (= (nthnext [1 2 3 4 5 6 7 8 9] 3) [4 5 6 7 8 9]))
 (assert (= (nthnext [1] 2) []))
+
+(print "test interleave")
+
+(assert (= (interleave (list :a :b :c) (list 1 2 3)) [:a 1 :b 2 :c 3]))
+(assert (= (interleave [:a :b :c] [1 2 3]) [:a 1 :b 2 :c 3]))
