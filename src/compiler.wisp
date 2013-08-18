@@ -6,7 +6,8 @@
                               syntax-quote? name gensym pr-str]]
             [wisp.sequence :refer [empty? count list? list first second third
                                    rest cons conj reverse reduce vec last
-                                   repeat map filter take concat seq?]]
+                                   repeat map filter take concat seq? partition
+                                   interleave]]
             [wisp.runtime :refer [odd? dictionary? dictionary merge keys vals
                                   contains-vector? map-dictionary string?
                                   number? vector? boolean? subs re-find true?
@@ -618,6 +619,21 @@
   [form]
   (compile (list (cons 'fn (cons [] form)))))
 
+(defn destructure
+  [bindings]
+  (loop [result []
+         pairs (partition 2 bindings)]
+    (if (empty? pairs)
+      result
+      (cond
+        (vector? (first (first pairs))) (recur (reduce (fn [res x]
+                                                          (conj res x)) result
+                                                  (interleave
+                                                    (first (first pairs))
+                                                    (second (first pairs))))
+                                                (rest pairs))
+        :else (recur (reduce (fn [res x] (conj res x)) result (first pairs))
+                     (rest pairs))))))
 
 (defn define-bindings
   "Returns list of binding definitions"
@@ -995,7 +1011,7 @@
     ;; Consider making let a macro:
     ;; https://github.com/clojure/clojure/blob/master/src/clj/clojure/core.clj#L3999
     (cons 'do
-      (concat (define-bindings bindings) body))))
+      (concat (define-bindings (destructure bindings)) body))))
 
 (install-macro
  'cond

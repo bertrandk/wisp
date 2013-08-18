@@ -176,6 +176,10 @@
          (transpile '(let [x 1 y 2] x))
          "(function() {\n  var x = 1;\n  var y = 2;\n  return x;\n})()")
         "let with bindings compiles properly")
+(assert (identical?
+         (transpile '(let [[x y] [1 2]] x))
+         "(function() {\n  var x = 1;\n  var y = 2;\n  return x;\n})()")
+        "let with vector binding-exprs compiles properly")
 
 
 
