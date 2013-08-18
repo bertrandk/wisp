@@ -12,7 +12,7 @@ else
 	WISP = ./node_modules/wisp/bin/wisp.js
 endif
 
-core: runtime sequence string ast reader compiler writer
+core: runtime sequence string ast reader compiler writer analyzer expander escodegen
 node: core wisp node-engine repl
 browser: core browser-engine
 all: node browser
@@ -40,6 +40,20 @@ writer:
 	mkdir -p ./backend/javascript/
 	cat ./src/backend/javascript/writer.wisp | $(WISP) > ./backend/javascript/writer.js
 
+escodegen: escodegen-writer escodegen-compiler escodegen-generator
+
+escodegen-writer:
+	mkdir -p ./backend/escodegen/
+	cat ./src/backend/escodegen/writer.wisp | $(WISP) > ./backend/escodegen/writer.js
+
+escodegen-compiler:
+	mkdir -p ./backend/escodegen/
+	cat ./src/backend/escodegen/compiler.wisp | $(WISP) > ./backend/escodegen/compiler.js
+
+escodegen-generator:
+	mkdir -p ./backend/escodegen/
+	cat ./src/backend/escodegen/generator.wisp | $(WISP) > ./backend/escodegen/generator.js
+
 runtime:
 	cat ./src/runtime.wisp | $(WISP) > ./runtime.js
 
@@ -52,6 +66,12 @@ string:
 ast:
 	cat ./src/ast.wisp | $(WISP) > ./ast.js
 
+analyzer:
+	cat ./src/analyzer.wisp | $(WISP) > ./analyzer.js
+
+expander:
+	cat ./src/expander.wisp | $(WISP) > ./expander.js
+
 wisp:
 	cat ./src/wisp.wisp | $(WISP) > ./wisp.js
 
@@ -62,9 +82,3 @@ node-engine:
 browser-engine:
 	mkdir -p ./engine/
 	cat ./src/engine/browser.wisp | $(WISP) > ./engine/browser.js
-
-browser-embed: core browser-engine bundle-browser-engine
-bundle-browser-engine:
-	$(BROWSERIFY) --debug \
-                --exports require \
-                --entry ./engine/browser.js > ./browser-embed.js
