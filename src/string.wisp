@@ -32,8 +32,8 @@
   [string]
   (if (< (count string) 2)
       (upper-case string)
-      (str (upper-case (subs s 0 1))
-           (lower-case (subs s 1)))))
+      (str (upper-case (subs string 0 1))
+           (lower-case (subs string 1)))))
 
 (defn replace
   "Replaces all instance of match with replacement in s.
