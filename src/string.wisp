@@ -1,6 +1,6 @@
 (ns wisp.string
-  (:require [wisp.runtime :refer [str subs re-matches nil? string?]]
-            [wisp.sequence :refer [vec empty?]]))
+  (:require [wisp.runtime :refer [str subs re-matches nil? string? < subs]]
+            [wisp.sequence :refer [vec empty? count]]))
 
 (defn split
   "Splits string on a regular expression.  Optional argument limit is
